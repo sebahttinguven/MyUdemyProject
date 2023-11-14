@@ -1,0 +1,38 @@
+﻿@model List<ResultAppUserDto>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/AdminLayout/_AdminLayout.cshtml";
+    var count = 0;
+}
+
+<table class="table table-xs mb-0">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Ad Soyad</th>
+            <th>Departman</th>
+            <th>Durum</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            count++;
+        <tr>
+            <td>@count</td>
+            <td><img src="~/adminweb/images/avatar/1.jpg" class=" rounded-circle mr-3" alt="">@item.Name @item.Surname</td>
+
+            <td>
+                <span>@item.WorkLocation.WorkLocationName</span>
+            </td>
+            <td>
+               <i class="fa fa-circle text-success mr-2">Aktif</i>
+            </td>
+            
+        </tr>
+        }
+
+    </tbody>
+</table>
+<br />
+<a href="/Register/Index/" class="btn btn-primary">Yeni Kullanıcı Kaydı</a>
