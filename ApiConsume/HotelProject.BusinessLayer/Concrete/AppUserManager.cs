@@ -33,6 +33,11 @@ namespace HotelProject.BusinessLayer.Concrete
             throw new NotImplementedException();
         }
 
+        public int TGetUserCount()
+        {
+           return _appUserDal.GetUserCount();
+        }
+
         public void TInsert(AppUser t)
         {
             throw new NotImplementedException();
