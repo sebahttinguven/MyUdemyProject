@@ -4,8 +4,10 @@ using HotelProject.DataAccessLayer.Concrete;
 using HotelProject.EntityLayer.Concrete;
 using HotelProject.WebUI.Dtos.GuestDto;
 using HotelProject.WebUI.Dtos.SendMessageDto;
+using HotelProject.WebUI.Models.Role;
 using HotelProject.WebUI.ValidationRules.AdminContactValidationRules;
 using HotelProject.WebUI.ValidationRules.GuestValidatonRules;
+using HotelProject.WebUI.ValidationRules.RoleValidationRules;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -38,6 +40,7 @@ namespace HotelProject.WebUI
             services.AddTransient<IValidator<CreateGuestDto>, CreateGuestValidator>();
             services.AddTransient<IValidator<UpdateGuestDto>, UpdateGuestValidator>();
             services.AddTransient<IValidator<CreateSendMessageDto>, SendMessageValidator>();
+            services.AddTransient<IValidator<AddRoleViewModel>, CreateRoleValidator>();
             services.AddControllersWithViews().AddFluentValidation();
             services.AddAutoMapper(typeof(Startup));
             services.AddMvc(config=>{

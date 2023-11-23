@@ -31,7 +31,41 @@ namespace HotelProject.WebUI.Controllers
             }
             return View();
         }
-        [HttpGet] 
+
+        [HttpGet]
+        public async Task<IActionResult> UpdateBooking(int id)
+        {
+            //id'ye göre servisten ilgili rezervasyonu çekip durumunu güncelliyorum.
+            var value = new UpdateBookingDto();
+            var client1 = _httpClientFactory.CreateClient();
+            var responseMessage1 = await client1.GetAsync($"http://localhost:52373/api/Booking/{id}");
+            if (responseMessage1.IsSuccessStatusCode)
+            {
+                var jsonData1 = await responseMessage1.Content.ReadAsStringAsync();
+                value = JsonConvert.DeserializeObject<UpdateBookingDto>(jsonData1);
+
+            }
+            return View(value);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateBooking(UpdateBookingDto updateBookingDto)
+        {
+
+            var client = _httpClientFactory.CreateClient();
+            var jsonData = JsonConvert.SerializeObject(updateBookingDto);
+            StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
+            var responseMessage = await client.PutAsync("http://localhost:52373/api/Booking/UpdateBooking", stringContent);
+            if (responseMessage.IsSuccessStatusCode)
+            {
+
+                return RedirectToAction("Index");
+            }
+
+            return View();
+        }
+
+        [HttpGet]
         public async Task<IActionResult> ApprovedReservation(int id)
         {
             //id'ye göre servisten ilgili rezervasyonu çekip durumunu güncelliyorum.
@@ -41,7 +75,7 @@ namespace HotelProject.WebUI.Controllers
             if (responseMessage1.IsSuccessStatusCode)
             {
                 var jsonData1 = await responseMessage1.Content.ReadAsStringAsync();
-                 value = JsonConvert.DeserializeObject<ResultBookingDto>(jsonData1);
+                value = JsonConvert.DeserializeObject<ResultBookingDto>(jsonData1);
                 value.Status = "Onaylandı";
                 //Daha sonra dataları güncelleme metoduna gönderiyorum.
                 var client = _httpClientFactory.CreateClient();
@@ -55,7 +89,7 @@ namespace HotelProject.WebUI.Controllers
                 }
             }
 
-;        
+
             return View();
         }
 
@@ -83,7 +117,7 @@ namespace HotelProject.WebUI.Controllers
                 }
             }
 
-;
+
             return View();
         }
 
@@ -98,7 +132,7 @@ namespace HotelProject.WebUI.Controllers
             {
                 var jsonData1 = await responseMessage1.Content.ReadAsStringAsync();
                 value = JsonConvert.DeserializeObject<ResultBookingDto>(jsonData1);
-                value.Status = "Bekletildi";
+                value.Status = "Müşteri Aranacak";
                 //Daha sonra dataları güncelleme metoduna gönderiyorum.
                 var client = _httpClientFactory.CreateClient();
                 var jsonData = JsonConvert.SerializeObject(value);
@@ -110,8 +144,6 @@ namespace HotelProject.WebUI.Controllers
                     return RedirectToAction("Index");
                 }
             }
-
-;
             return View();
         }
     }
