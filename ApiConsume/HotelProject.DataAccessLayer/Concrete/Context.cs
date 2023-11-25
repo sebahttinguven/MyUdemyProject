@@ -13,7 +13,7 @@ namespace HotelProject.DataAccessLayer.Concrete
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server = " + "ERKO_SERVER" + "; Database = " + "ApiDb" + "; User ID = " + "sa" + "; Password = " + "LOGO1!" + "; Trusted_Connection = False;");
+            optionsBuilder.UseSqlServer(@"Server = " + "" + "; Database = " + "" + "; User ID = " + "" + "; Password = " + "!" + "; Trusted_Connection = False;");
         }
         public DbSet<Room> Rooms { get; set; }
         public DbSet<Staff> Staffs { get; set; }
